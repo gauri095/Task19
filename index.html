@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Booking App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">MyServiceApp</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <div class="user-info">
+            <span id="username">Guest_User</span>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <section class="left-section">
+            <h3>Added Items</h3>
+            <div id="cart-display">No items have been added.</div>
+            <hr>
+            <div class="total-container">
+                <strong>Total Amount: $ <span id="total-price">0</span></strong>
+            </div>
+
+            <div class="booking-form">
+                <h3>Book Now</h3>
+                <input type="text" placeholder="Full Name">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <button class="book-final-btn">Book Now</button>
+            </div>
+        </section>
+
+        <section class="right-section">
+            <h2>Browse Our Services</h2>
+            <p>Select from our high-quality professional services below.</p>
+
+            <div class="services-list">
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/100" alt="Service 1">
+                    <h4>Basic Consulting</h4>
+                    <p>Price: $50</p>
+                    <button onclick="addItem('Basic Consulting', 50)">Add Item</button>
+                    <button class="skip-btn">Skip Item</button>
+                </div>
+
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/100" alt="Service 2">
+                    <h4>Premium Support</h4>
+                    <p>Price: $120</p>
+                    <button onclick="addItem('Premium Support', 120)">Add Item</button>
+                    <button class="skip-btn">Skip Item</button>
+                </div>
+            </div>
+
+            <div class="cart-options">
+                <p>Ready to finalize?</p>
+                <button>Add to Cart</button>
+                <button>Book Now</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
