@@ -1,44 +1,55 @@
+// total price variable
 let total = 0;
 
-const cart = document.getElementById("cart");
-const totalEl = document.getElementById("total");
+// getting elements from HTML (IMPORTANT: IDs match your HTML)
+let cartDisplay = document.getElementById("cart-display");
+let totalPrice = document.getElementById("total-price");
 
-// add item function
+console.log("JS loaded");
+
+// -------------------- ADD ITEM --------------------
 function addItem(name, price) {
-    console.log("adding item:", name);
+    console.log("add clicked:", name);
 
-    let li = document.createElement("li");
-    li.innerText = name + " - $" + price;
+    // remove default text if first item
+    if (cartDisplay.innerText.includes("No items")) {
+        cartDisplay.innerHTML = "";
+    }
+
+    // create container
+    let div = document.createElement("div");
+
+    // item text
+    let text = document.createElement("span");
+    text.innerText = name + " - $" + price;
 
     // remove button
-    let btn = document.createElement("button");
-    btn.innerText = "Remove";
+    let removeBtn = document.createElement("button");
+    removeBtn.innerText = "Remove";
 
-    btn.addEventListener("click", function() {
-        console.log("removing item");
+    // remove logic
+    removeBtn.addEventListener("click", function () {
+        console.log("removing:", name);
 
-        cart.removeChild(li);
+        cartDisplay.removeChild(div);
         total = total - price;
-        totalEl.innerText = total;
+        totalPrice.innerText = total;
     });
 
-    li.appendChild(btn);
-    cart.appendChild(li);
+    // add to div
+    div.appendChild(text);
+    div.appendChild(removeBtn);
 
+    // add to cart
+    cartDisplay.appendChild(div);
+
+    // update total
     total = total + price;
-    totalEl.innerText = total;
+    totalPrice.innerText = total;
 }
-let addBtns = document.querySelectorAll(".addBtn");
 
-addBtns.forEach(function(btn) {
-    btn.addEventListener("click", function() {
-        let name = btn.getAttribute("data-name");
-        let price = parseInt(btn.getAttribute("data-price"));
-
-        addItem(name, price);
-    });
-});
-let skipBtns = document.querySelectorAll(".skipBtn");
+// -------------------- SKIP BUTTON --------------------
+let skipBtns = document.querySelectorAll(".skip-btn");
 
 skipBtns.forEach(function(btn) {
     btn.addEventListener("click", function() {
@@ -46,28 +57,43 @@ skipBtns.forEach(function(btn) {
         alert("Item skipped");
     });
 });
-const form = document.getElementById("bookingForm");
-const msg = document.getElementById("msg");
 
-form.addEventListener("submit", function(e) {
-    e.preventDefault();
+// -------------------- FORM HANDLING --------------------
+let form = document.getElementById("bookingForm");
+let msg = document.getElementById("msg");
 
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
+if (form) {
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    console.log(name, email, phone);
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
 
-    if (name === "" || email === "" || phone === "") {
-        msg.innerText = "fill all fields";
-        return;
-    }
+        console.log(name, email, password);
 
-    if (!email.includes("@")) {
-        msg.innerText = "invalid email";
-        return;
-    }
+        // simple validation
+        if (name === "" || email === "" || password === "") {
+            msg.innerText = "Please fill all fields";
+            return;
+        }
 
-    msg.innerText = "booking done!";
-});
+        if (!email.includes("@")) {
+            msg.innerText = "Invalid email";
+            return;
+        }
 
+        msg.innerText = "Booking successful!";
+    });
+}
+
+// -------------------- LOGOUT --------------------
+let logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", function() {
+        console.log("logging out");
+        alert("Logging out...");
+        location.reload();
+    });
+}
