@@ -1,26 +1,73 @@
 let total = 0;
-const cartDisplay = document.getElementById('cart-display');
-const totalPriceElement = document.getElementById('total-price');
 
-// Function to add item to the list
-const addItem = (name, price) => {
-    // If it's the first item, clear the "No items" text
-    if (total === 0) {
-        cartDisplay.innerHTML = "";
+const cart = document.getElementById("cart");
+const totalEl = document.getElementById("total");
+
+// add item function
+function addItem(name, price) {
+    console.log("adding item:", name);
+
+    let li = document.createElement("li");
+    li.innerText = name + " - $" + price;
+
+    // remove button
+    let btn = document.createElement("button");
+    btn.innerText = "Remove";
+
+    btn.addEventListener("click", function() {
+        console.log("removing item");
+
+        cart.removeChild(li);
+        total = total - price;
+        totalEl.innerText = total;
+    });
+
+    li.appendChild(btn);
+    cart.appendChild(li);
+
+    total = total + price;
+    totalEl.innerText = total;
+}
+let addBtns = document.querySelectorAll(".addBtn");
+
+addBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+        let name = btn.getAttribute("data-name");
+        let price = parseInt(btn.getAttribute("data-price"));
+
+        addItem(name, price);
+    });
+});
+let skipBtns = document.querySelectorAll(".skipBtn");
+
+skipBtns.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+        console.log("skip clicked");
+        alert("Item skipped");
+    });
+});
+const form = document.getElementById("bookingForm");
+const msg = document.getElementById("msg");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+
+    console.log(name, email, phone);
+
+    if (name === "" || email === "" || phone === "") {
+        msg.innerText = "fill all fields";
+        return;
     }
 
-    // Add item to list
-    const itemEntry = document.createElement('p');
-    itemEntry.innerText = `${name} - $${price}`;
-    cartDisplay.appendChild(itemEntry);
+    if (!email.includes("@")) {
+        msg.innerText = "invalid email";
+        return;
+    }
 
-    // Update Total
-    total += price;
-    totalPriceElement.innerText = total;
-};
-
-// Logout functionality
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    alert("Logging out...");
-    window.location.reload();
+    msg.innerText = "booking done!";
 });
+
